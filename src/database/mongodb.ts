@@ -1,9 +1,11 @@
 import { MongoClient } from "mongodb";
 
+import { getMongoUri } from "../config/env.js";
+
 let client: MongoClient | undefined;
 
 export async function connectToMongo(): Promise<MongoClient> {
-  const uri = process.env.MONGO_URI;
+  const uri = getMongoUri();
 
   if (!uri) {
     throw new Error("MONGO_URI is required");
