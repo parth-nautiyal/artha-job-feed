@@ -1,15 +1,13 @@
-import { createApp } from "./app.js";
-import { getPort } from "./config/env.js";
-import { closeMongo, connectToMongo } from "./database/mongodb.js";
-import { initializeMongoDatabase } from "./database/mongodb-init.js";
+import "dotenv/config";
 
-const port = getPort();
+import { createApp } from "./app.js";
+import { closeMongo, connectToMongo } from "./mongodb.js";
+
+const port = Number(process.env.PORT ?? 3000);
 
 try {
-	const mongoClient = await connectToMongo();
-	await initializeMongoDatabase(mongoClient);
+	await connectToMongo();
 	console.log("MongoDB connection established");
-	console.log("MongoDB collections and indexes initialized");
 
 	const app = createApp();
 	app.listen(port, () => {
