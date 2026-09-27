@@ -1,0 +1,15 @@
+services:
+  mongodb:
+    image: mongo:7.0
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:27018:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME:?Set MONGO_ROOT_USERNAME in the environment}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:?Set MONGO_ROOT_PASSWORD in the environment}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-job_feed}
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:
