@@ -11,7 +11,7 @@ try {
 	console.log("MongoDB connection established");
 	console.log("MongoDB collections and indexes initialized");
 
-	const app = createApp();
+	const app = createApp(mongoClient.db());
 	app.listen(port, () => {
 		console.log(`HTTP server listening on port ${port}`);
 	});

@@ -1,3 +1,5 @@
+import { JOB_STATUS } from "./constants.js";
+
 export interface JobPayload {
   title: string;
   company: string;
@@ -8,7 +10,7 @@ export interface JobPayload {
   skills: string[];
 }
 
-export type JobStatus = "active" | "archived";
+export type JobStatus = typeof JOB_STATUS.ACTIVE | typeof JOB_STATUS.ARCHIVED;
 
 export interface JobDocument {
   tenantId: string;

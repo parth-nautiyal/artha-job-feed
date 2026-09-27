@@ -1,16 +1,17 @@
+import { EVENT_OPERATION, EVENT_STATUS } from "./constants.js";
 import type { JobPayload } from "./job.model.js";
 
-export type EventOperation = "upsert" | "archive";
+export type EventOperation =
+  | typeof EVENT_OPERATION.UPSERT
+  | typeof EVENT_OPERATION.ARCHIVE;
 
-export type EventStatus = "pending" | "processing" | "completed" | "failed";
+export type EventStatus =
+  | typeof EVENT_STATUS.PENDING
+  | typeof EVENT_STATUS.PROCESSING
+  | typeof EVENT_STATUS.SUCCEEDED
+  | typeof EVENT_STATUS.FAILED;
 
-export interface EventError {
-  code: string;
-  message: string;
-  at: Date;
-}
-
-export interface EventDocument {
+export interface NormalizedEvent {
   tenantId: string;
   sourceId: string;
   eventId: string;
@@ -18,13 +19,12 @@ export interface EventDocument {
   version: number;
   operation: EventOperation;
   payload?: JobPayload;
+}
+
+export interface EventDocument extends NormalizedEvent {
   status: EventStatus;
   attempts: number;
   nextAttemptAt: Date;
-  claimedBy?: string;
-  leaseUntil?: Date;
-  lastError?: EventError;
   createdAt: Date;
   updatedAt: Date;
-  processedAt?: Date;
 }
